@@ -36,16 +36,15 @@ from django.urls import path
 from django.views.generic import TemplateView
 from django.conf.urls import url
 
-from .settings import DEBUG, BASE_DIR
+from .settings import DEBUG, BASE_DIR, VUE_OUTPUT_DIR
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='index.html')),
 ]
 
-if DEBUG:
-    dist_dir = os.path.join(BASE_DIR, 'dist')
-    js_files = [f for f in os.scandir(dist_dir) if f.is_file() and f.name[-3:] == ".js"]
+if DEBUG and os.path.isdir(VUE_OUTPUT_DIR):
+    js_files = (f for f in os.scandir(VUE_OUTPUT_DIR) if f.is_file() and f.name[-3:] == ".js")
     for i in map(lambda x: x.name, js_files):
         urlpatterns.append(url(i, TemplateView.as_view(template_name=i)))
 

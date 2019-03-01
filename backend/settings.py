@@ -67,10 +67,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 
+# Where vue puts frontend static code
+VUE_OUTPUT_DIR = os.path.join(BASE_DIR, 'dist')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'dist')],
+        'DIRS': [VUE_OUTPUT_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -136,5 +139,5 @@ USE_TZ = True
 STATIC_URL = '/assets/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'dist/assets'),
+    os.path.join(VUE_OUTPUT_DIR, 'assets'),
 ]
